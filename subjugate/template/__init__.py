@@ -72,6 +72,3 @@ class SubjugateTemplate:
             context = make_context(context, request, autoescape=self.engine.autoescape)
 
         return self.userclass(self.engine, context, request).render(**kwargs)
-
-    def html(self, context=None, request=None):
-        return self.render(context, request).render()
