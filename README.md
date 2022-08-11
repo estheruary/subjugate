@@ -20,19 +20,19 @@ pip install domainate
 
 ```python
 INSTALLED_APPS = [
-		...,
+    ...,
     "subjugate",
-		...
+    ...
 ]
 
 TEMPLATES = [
-	...,
-	{
-		"BACKEND": "subjugate.template.backends.subjugate.SubjugateTemplates",
-		"DIRS": [],
-		"APP_DIRS": True,
-		"OPTIONS": {"debug": False},
-	}
+  ...,
+  {
+    "BACKEND": "subjugate.template.backends.subjugate.SubjugateTemplates",
+    "DIRS": [],
+    "APP_DIRS": True,
+    "OPTIONS": {"debug": False},
+  }
 ]
 ```
 
@@ -45,7 +45,7 @@ from subjugate import SubjugateTemplate
 from dominate import tags as t
 
 class PageTemplate(SubjugateTemplate):
-	def render(self, title="Page", description="Cool stuff here", **kwargs):
+  def render(self, title="Page", description="Cool stuff here", **kwargs):
         document = dominate.document(title=title)
         abs_url = self.request.build_absolute_uri()
 
@@ -70,18 +70,18 @@ class PageTemplate(SubjugateTemplate):
             t.meta(property="og:type", content="website")
             t.meta(property="og:url", content=f"{abs_url}")
 
-				with document:
-					t.p("Hello World!")
+        with document:
+          t.p("Hello World!")
 
-				return document
+        return document
 ```
 
 Then in `urls.py`
 
 ```python
 urlpatterns = [
-	...,
-	path("page/", TemplateView.as_view(template_name="yourapp/page.py")),
+  ...,
+  path("page/", TemplateView.as_view(template_name="yourapp/page.py")),
 ]
 ```
 
@@ -89,52 +89,52 @@ urlpatterns = [
 
 ```python
 class BaseTemplate(SubjugateTemplate):
-	def render(self, title="Blah", **kwargs):
-		document = dominate.document(title=title)
+  def render(self, title="Blah", **kwargs):
+    document = dominate.document(title=title)
 
-		with document.head:
-			t.title(title)
+    with document.head:
+      t.title(title)
 
-		return document
+    return document
 
 class DerivedTemplate(SubjugateTemplate):
-	def render(self, **kwargs):
-		base = self.extend("yourapp/base.py", title="Title Works")
+  def render(self, **kwargs):
+    base = self.extend("yourapp/base.py", title="Title Works")
 
-		with base:
-			t.p("Hello from the derived template!")
+    with base:
+      t.p("Hello from the derived template!")
 
-		return base
+    return base
 ```
 
 ## Other Features
 
 ```python
 class TemplateVars(SubjugateTemplate):
-	def render(self, **kwargs):
-		base = self.extend("yourapp/base.py", title="Title Works")
+  def render(self, **kwargs):
+    base = self.extend("yourapp/base.py", title="Title Works")
 
-		with base:
-			# Context Vars
-			t.p(self.vars.message)
+    with base:
+      # Context Vars
+      t.p(self.vars.message)
 
-			# Page URLs
-			t.p(self.url('yourapp/copyright.py'))
+      # Page URLs
+      t.p(self.url('yourapp/copyright.py'))
 
-			# Static URLs
-			t.p(self.static('yourapp/humans.txt'))
+      # Static URLs
+      t.p(self.static('yourapp/humans.txt'))
 
-			# CSRF Tokens
-			t.p(self.csrf_token())
+      # CSRF Tokens
+      t.p(self.csrf_token())
 
-			# Filters
-			t.p(self.filter("upper", "yes"))
+      # Filters
+      t.p(self.filter("upper", "yes"))
 
-			# Lorem Ipsum
-			t.p(self.lorem_words(count=15))
-			t.p(self.lorem_paragraphs(count=3))
+      # Lorem Ipsum
+      t.p(self.lorem_words(count=15))
+      t.p(self.lorem_paragraphs(count=3))
 
-		return base
+    return base
 ```
 
 ## But I don't want to use Domainate
