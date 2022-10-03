@@ -72,10 +72,6 @@ class GenericEngine(Engine, DjangoTemplates):
     def __repr__(self):
         return f"<{self.__class__.__qualname__}>"
 
-    @cached_property
-    def template_context_processors(self):
-        return tuple([import_string(path) for path in self.context_processors])
-
     def find_template_loader(self, loader):
         if isinstance(loader, (tuple, list)):
             loader, *args = loader

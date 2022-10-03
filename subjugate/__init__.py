@@ -22,6 +22,9 @@ class SubjugateTemplate(ABC):
     def csrf_token(self):
         return self.context.get("csrf_token", "") if self.context else ""
 
+    def csrf_input(self):
+        return str(self.context.get("csrf_input", "")) if self.context else ""
+
     def url(self, path):
         return reverse(path)
 
@@ -51,4 +54,4 @@ class SubjugateTemplate(ABC):
 
     @abstractmethod
     def render(**kwargs):
-        ...
+        pass
