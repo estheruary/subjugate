@@ -1,6 +1,5 @@
 from typing import List, Tuple, Union
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 from django.template import Template
 from django.template.engine import Engine

@@ -38,4 +38,3 @@ class GenericLoader(base.Loader):
 
     def from_string(self, template_code):
         return self.template_cls(template_code, self.engine)
-
